@@ -31,21 +31,8 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('ss', 'Home::index');
-$routes->get('pokus', 'Home::method2');
-$routes->get('kosmonaut', 'Pokus::pokus');
-$routes->get('/organizace/(:num)', 'Pokus::cards/$1');
-//$routes->get('skupina/(:num)/raketa', 'Pokus::raketa/$1');
-//$routes->get('skupina/(:num)/posadka', 'Pokus::posadka/$1');
-//$routes->get('skupina/(:num)/program', 'Pokus::program/$1');
-$routes->get('zeme', 'Pokus::zeme');
-$routes->get('zeme/(:num)', 'Pokus::vesmzeme/$1');
-$routes->get('organizace', 'Pokus::organizace');
-$routes->get('/', 'Pokus::default');
-$routes->get('kosmonaut/(:num)', 'Pokus::getKosByRak/$1');
-$routes->get('useless', 'Pokus::useless');
-$routes->match(['get', 'post'],'useless/aer', 'Pokus::aer');
-$routes->get('useless/page', 'Pokus::pagination');
+$routes->get('/', 'Home::index');
+
 
 
 /*

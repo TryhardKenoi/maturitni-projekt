@@ -6,10 +6,8 @@ class Home extends BaseController
 {
     public function index()
     {
-        return view('welcome_message');
+        return view('index');
     }
 
-    public function method2() {
-        echo view('pokus2');
-    }
+
 }
