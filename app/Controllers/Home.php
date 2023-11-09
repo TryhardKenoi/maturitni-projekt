@@ -21,8 +21,8 @@ class Home extends BaseController
         //$model = new EventModel();
         $data = [
             'nazev_eventu' => $this->request->getPost('nazev_eventu'),
-            'zacatek_eventu' => $this->request->getPost('nazev_eventu'),
-            'konec_eventu' => $this->request->getPost('nazev_eventu')
+            'zacatek_eventu' => $this->request->getPost('zacatek_eventu'),
+            'konec_eventu' => $this->request->getPost('konec_eventu')
         ]; 
 
         $db = \Config\Database::connect();
