@@ -23,7 +23,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'http://localhost/valenta-projekt/';
+    public $baseURL = 'http://localhost/final/';
 
     /**
      * --------------------------------------------------------------------------

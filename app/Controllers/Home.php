@@ -22,8 +22,9 @@ class Home extends BaseController
         $data = [
             'nazev_eventu' => $this->request->getPost('nazev_eventu'),
             'zacatek_eventu' => $this->request->getPost('zacatek_eventu'),
-            'konec_eventu' => $this->request->getPost('konec_eventu')
-        ]; 
+            'konec_eventu' => $this->request->getPost('konec_eventu'),
+            'color' => $this->request->getPost('color')
+        ];
 
         $db = \Config\Database::connect();
         $builder = $db->table('eventy');

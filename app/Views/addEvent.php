@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.9/index.global.min.js'></script>
-    
+
   </head>
   <body>
-    
+
   <div class="container mt-5">
         <h1>Přidejte event</h1>
         <form action="<?php echo base_url('/create'); ?>" method="post">
@@ -27,11 +27,13 @@
                 <label for="datum2" class="form-label">Konec eventu</label>
                 <input type="date" class="form-control" id="konec_eventu" name="konec_eventu">
             </div>
+            <div>
+              <label for="color">Vyberte barvu:</label>
+              <input type="color" id="color" name="color" value="#0BA0E0">
+            </div>
             <button type="submit" class="btn btn-primary">Odeslat</button>
         </form>
     </div>
 
   </body>
 </html>
-    
- 
