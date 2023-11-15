@@ -5,5 +5,8 @@
     <div class="navbar-links">
         <ul>
             <li><a href="<?= base_url('')?>">Domů</a></li>
+            <li><a href="<?= base_url('/login')?>">Přihlášení</a></li>
+            <li><a href="<?= base_url('/register')?>">Registrace</a></li>
+
         </ul>
 </nav>

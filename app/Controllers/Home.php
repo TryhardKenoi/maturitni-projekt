@@ -18,13 +18,20 @@ class Home extends BaseController
     }
 
     public function create(){
-        //$model = new EventModel();
         $data = [
-            'nazev_eventu' => $this->request->getPost('nazev_eventu'),
-            'zacatek_eventu' => $this->request->getPost('zacatek_eventu'),
-            'konec_eventu' => $this->request->getPost('konec_eventu'),
-            'color' => $this->request->getPost('color')
-        ];
+        'nazev_eventu' => $this->request->getPost('nazev_eventu'),
+        'zacatek_eventu' => null,
+        'konec_eventu' => null,
+        'color' => $this->request->getPost('color')
+    ];
+
+    $datum = $this->request->getPost('datum');
+    if ($datum) {
+        $splitDatum = explode(" to ", $datum);
+        $data['zacatek_eventu'] = date('Y-m-d', strtotime($rozgah[0]));
+        $data['konec_eventu'] = date('Y-m-d', strtotime($rozgah[1]));
+    }
+
 
         $db = \Config\Database::connect();
         $builder = $db->table('eventy');

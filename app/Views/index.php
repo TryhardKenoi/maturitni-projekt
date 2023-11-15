@@ -37,6 +37,8 @@ foreach ($events as $event) {
     <a href="/final/pridejEvent"><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">
       Přidej event
     </button></a>
+    <button id="showWeekBtn" class="btn btn-secondary" type="button" name="button">Týden</button>
+    <button id="showMonthBtn" class="btn btn-secondary" type="button" name="button">Měsíc</button>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -77,7 +79,6 @@ foreach ($events as $event) {
   var calendarEl = document.getElementById('calendar');
   var calendar = new FullCalendar.Calendar(calendarEl, {
       height: 550,
-
       initialView: 'dayGridMonth',
       events: <?php echo json_encode($events_data); ?>,
 
@@ -95,8 +96,20 @@ foreach ($events as $event) {
       },
   });
   calendar.render();
+
+  // Funkce pro změnu zobrazení na týdení
+      document.getElementById('showWeekBtn').addEventListener('click', function() {
+        calendar.changeView('timeGridWeek');
+      });
+
+      // Funkce pro změnu zobrazení na měsíční
+      document.getElementById('showMonthBtn').addEventListener('click', function() {
+        calendar.changeView('dayGridMonth');
+      });
+
   });
 </script>
+
 
   </body>
 </html>
