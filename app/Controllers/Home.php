@@ -3,8 +3,13 @@
 namespace App\Controllers;
 use App\Models\EventModel;
 use App\Models\GetEvent;
+use App\Libraries\Datum;
 class Home extends BaseController
 {
+  var $datum;
+  function __construct(){
+    $this->datum = new Datum();
+  }
     public function index()
     {
         $model = new GetEvent();
@@ -22,14 +27,14 @@ class Home extends BaseController
         'nazev_eventu' => $this->request->getPost('nazev_eventu'),
         'zacatek_eventu' => null,
         'konec_eventu' => null,
-        'color' => $this->request->getPost('color')
+        'color' => $this->request->getPost('color'),
     ];
 
-    $datum = $this->request->getPost('datum');
-    if ($datum) {
-        $splitDatum = explode(" to ", $datum);
-        $data['zacatek_eventu'] = date('Y-m-d', strtotime($rozgah[0]));
-        $data['konec_eventu'] = date('Y-m-d', strtotime($rozgah[1]));
+    $rozgahDatum = $this->request->getPost('rozgah_datum'); // Opravený název proměnné
+    if ($rozgahDatum) {
+      $datum = $this->datum->splitDate($rozgahDatum);
+      $data['zacatek_eventu'] = $datum['zacatek_eventu'];
+      $data['konec_eventu'] = $datum['konec_eventu'];
     }
 
 

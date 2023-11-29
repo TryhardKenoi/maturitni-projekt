@@ -34,9 +34,12 @@ foreach ($events as $event) {
   <body>
 
   <div class="text-center pt-5">
+    <?php if (\App\Helpers\User::isLoggedIn()): ?>
+
     <a href="/final/pridejEvent"><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">
       Přidej event
     </button></a>
+  <?php endif; ?>
     <button id="showWeekBtn" class="btn btn-secondary" type="button" name="button">Týden</button>
     <button id="showMonthBtn" class="btn btn-secondary" type="button" name="button">Měsíc</button>
 

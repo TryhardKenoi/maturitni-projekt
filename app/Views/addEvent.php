@@ -22,9 +22,9 @@
               <input type="name" class="form-control" id="nazev_eventu" name="nazev_eventu">
           </div>
           <div class="mb-3">
-              <label for="datum" class="form-label">Datum konání eventu</label>
-              <input type="text" class="form-control" id="datum" name="datum" placeholder="Vyberte datum konání">
-          </div>
+            <label for="rozgah_datum" class="form-label">Rozsah eventu</label>
+            <input type="text" class="form-control" id="rozgah_datum" name="rozgah_datum" placeholder="Vyberte rozsah datumů">
+        </div>
           <div>
               <label for="color">Vyberte barvu:</label>
               <input type="color" id="color" name="color" value="#0BA0E0">
@@ -34,11 +34,11 @@
   </div>
 
   <script>
-      flatpickr("#datum", {
+      flatpickr("#rozgah_datum", {
           enableTime: false,
           mode: "range",
           dateFormat: "Y-m-d",
-          
+
       });
   </script>
   </body>

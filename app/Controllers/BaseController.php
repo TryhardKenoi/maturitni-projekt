@@ -21,6 +21,8 @@ use Psr\Log\LoggerInterface;
  */
 class BaseController extends Controller
 {
+
+    public $ionAuth;
     /**
      * Instance of the main Request object.
      *
@@ -46,8 +48,8 @@ class BaseController extends Controller
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
-        
-        
+        $this->ionAuth = new \IonAuth\Libraries\IonAuth();
+
         // E.g.: $this->session = \Config\Services::session();
     }
 }
