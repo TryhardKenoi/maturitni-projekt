@@ -1,6 +1,7 @@
 <?php
 $events_data = [];
 
+
 foreach ($events as $event) {
     $title = $event['nazev_eventu'];
     $start = $event['zacatek_eventu'];
@@ -15,6 +16,7 @@ foreach ($events as $event) {
         'color' => $color
     ];
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +49,7 @@ foreach ($events as $event) {
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"><?= $title ?></h5>
+            <h5 class="modal-title" id="exampleModalLabel"><?= (isset($title))?$title:"" ?></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

@@ -11,10 +11,20 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.9/index.global.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+    <?= $this->include('layout/navbar') ?>
+
   </head>
   <body>
+    <div class="text-center pt-3">
+      <h1>Vítejte, <?= \App\Helpers\User::user()->first_name; ?></h1>
+    </div>
+<div class="col-12">
+  <h2>Údaje</h2>
 
-    <?php include_once 'vendor\benedmunds\codeigniter-ion-auth\Views\auth\login.php'; ?>
-
+  <p>Name: <?= \App\Helpers\User::user()->first_name; ?> <?= \App\Helpers\User::user()->last_name; ?></p>
+  <p>Email: <?= \App\Helpers\User::user()->email; ?></p>
+  <p>Firma: <?= \App\Helpers\User::user()->company; ?></p>
+  <p>ID: <?= \App\Helpers\User::user()->id; ?></p>
+</div>
   </body>
 </html>
