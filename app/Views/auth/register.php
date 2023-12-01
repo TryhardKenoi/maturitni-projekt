@@ -110,7 +110,7 @@
             </div>
           </div>
 
-          
+
 
           <div class="input-group mb-3">
             <input type="email" class="form-control" name="email" id="email" placeholder="Email">
@@ -155,7 +155,7 @@
         <div class="social-auth-links text-center">
 
         </div>
-        <a href="login.html" class="text-center"><?= lang('Auth.have_account');?></a>
+        <a href="<?= base_url('auth/login'); ?>" class="text-center"><?= lang('Auth.have_account');?></a>
       </div>
 
     </div>

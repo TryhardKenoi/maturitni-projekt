@@ -45,7 +45,7 @@ $routes->group('auth', ['namespace' => 'App\Controllers'], function ($routes) {
   $routes->get('/', 'Auth::index');
   $routes->add('create_user', 'Auth::create_user');
 	// $routes->add('edit_user/(:num)', 'Auth::edit_user/$1');
-	// $routes->add('create_group', 'Auth::create_group');
+	 $routes->add('create_group', 'Auth::create_group');
 	// $routes->get('activate/(:num)', 'Auth::activate/$1');
 	// $routes->get('activate/(:num)/(:hash)', 'Auth::activate/$1/$2');
 	// $routes->add('deactivate/(:num)', 'Auth::deactivate/$1');
