@@ -34,9 +34,16 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::index');
 $routes->get('/pridejEvent','Home::addEvent', ['filter'=>'auth']);
 $routes->post('/create', 'Home::create');
-$routes->get('/profil', 'Home::profil');
+$routes->get('/profil', 'Home::profil/');
 $routes->get('/register', 'Home::register');
 $routes->post('/auth/register', 'Home::createUser');
+$routes->get('/create_group', 'Home::group');
+$routes->post('/auth/create_group', 'Home::createGroup');
+$routes->get('/group/(:num)', 'Home::showGroup/$1');
+$routes->get('/event/(:num)','Home::getEvent/$1');
+$routes->get('/events','Home::getEvents');
+$routes->get('/event/edit/(:num)', 'Home::getEventEdit/$1');
+
 
 $routes->group('auth', ['namespace' => 'App\Controllers'], function ($routes) {
 	$routes->add('login', 'Auth::login');
@@ -45,7 +52,7 @@ $routes->group('auth', ['namespace' => 'App\Controllers'], function ($routes) {
   $routes->get('/', 'Auth::index');
   $routes->add('create_user', 'Auth::create_user');
 	// $routes->add('edit_user/(:num)', 'Auth::edit_user/$1');
-	 $routes->add('create_group', 'Auth::create_group');
+	 //$routes->add('create_group', 'Auth::create_group');
 	// $routes->get('activate/(:num)', 'Auth::activate/$1');
 	// $routes->get('activate/(:num)/(:hash)', 'Auth::activate/$1/$2');
 	// $routes->add('deactivate/(:num)', 'Auth::deactivate/$1');

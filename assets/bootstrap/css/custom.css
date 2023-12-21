@@ -103,5 +103,15 @@ body {
 footer{
     background-color: #1b1f24 !important;
     overflow: hidden;
+  }
+
+.barvicka{
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  margin-left: 1rem;
 }
-  
+
+.show {
+  display: block !important;
+}

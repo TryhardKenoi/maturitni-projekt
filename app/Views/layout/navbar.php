@@ -1,14 +1,14 @@
 <nav class="navbar">
-    <a href="http://kenoi.jednoduse.cz/">
-        <img src="<?=base_url('assets/images/logowhite.png')?>"  alt="image">
-    </a>
+    <div class="p-3">
+        <h1><b>Event</b>Fusion</h1>
+    </div>
     <div class="navbar-links">
         <ul>
             <li><a href="<?= base_url('')?>">Domů</a></li>
 
           <?php if (\App\Helpers\User::isLoggedIn()): ?>
             <li>
-              <a href="<?= base_url('/profil') ?>">
+              <a href="<?= base_url('/profil/')?>">
                 <?= \App\Helpers\User::user()->email; ?>
               </a>
             </li>

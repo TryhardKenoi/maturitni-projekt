@@ -9,7 +9,7 @@ class User
     public static function isLoggedIn() {
         $ionAuth = new \IonAuth\Libraries\IonAuth();
 
-        return   $ionAuth->loggedIn();
+        return $ionAuth->loggedIn();
     }
 
     public static function user() {
@@ -17,5 +17,7 @@ class User
 
       return $ionAuth->user()->row();
     }
+
+
 
 }

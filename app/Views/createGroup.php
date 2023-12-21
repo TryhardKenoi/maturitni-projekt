@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang='cs'>
 
 <head>
   <title>Kenoi's website</title>
@@ -82,66 +82,44 @@
     })(window, document);
   </script>
 </head>
-</head>
 
-<body class="hold-transition login-page">
-  <div class="login-box">
 
+<body class="hold-transition register-page">
+  <div class="register-box">
     <div class="card card-outline card-secondary">
       <div class="card-header text-center">
         <a href="<?= base_url('/'); ?>" class="h1"><b>Event</b>Fusion</a>
       </div>
       <div class="card-body">
-        <p class="login-box-msg"><?php
-
-                    use Symfony\Contracts\Service\Attribute\Required;
-
- echo lang('Auth.login_heading'); ?></p>
-        <form id="myForm"action="<?= base_url('auth/login'); ?>" method="post">
+        <p class="login-box-msg">Vytvoření skupiny</p>
+        <form action="<?= base_url('/auth/create_group') ?>" method="post">
           <div class="input-group mb-3">
-            <input type="email" name="identity" id="identity" class="form-control" placeholder="Email" required>
+            <input type="text" name="group_name" id="group_name" class="form-control" placeholder="Název skupiny">
             <div class="input-group-append">
               <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
+                <span class="fas fa-user"></span>
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" name="password" id="password" class="form-control" required minlength="8" placeholder="<?= lang('Auth.login_password_label');?>">
+            <input type="text" class="form-control" name="description" id="description" placeholder="Popisek">
             <div class="input-group-append">
               <div class="input-group-text">
-                <span class="fas fa-lock"></span>
+                <span class="fas fa-user"></span>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-8">
-              <div class="icheck-primary">
-                <input type="checkbox" name="remember" id="remember">
-                <label for="remember">
-                  <?= lang('Auth.login_remember_label'); ?>
-                </label>
-              </div>
+            <div class="">
+              <button type="submit" name="submit" id="submit" class="btn btn-primary btn-block">Vytvořit skupinu</button>
             </div>
-            
-            <div class="col-4">
-              <button type="submit" id="submit" name="submit" class="btn btn-primary btn-block"><?= lang('Auth.login_submit_btn'); ?></button>
-            </div>
-
           </div>
         </form>
-      </div>
+        <div class="social-auth-links text-center">
+        </div>
 
-      <p class="mb-1 pr-3 pl-3">
-        <a href="forgot-password.html"><?php echo lang('Auth.login_forgot_password'); ?></a>
-      </p>
-      <p class="mb-1 pr-3 pl-3 pb-3">
-        <a href="<?= base_url('/register') ?> "><?php echo lang('Auth.no_login_yet'); ?></a>
-      </p>
+
+
     </div>
-
-  </div>
-
   </div>
 
 
@@ -150,7 +128,6 @@
   <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <script src="../../dist/js/adminlte.min.js?v=3.2.0"></script>
-
 </body>
 
 </html>

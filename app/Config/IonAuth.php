@@ -25,7 +25,7 @@ class IonAuth extends \IonAuth\Config\IonAuth
   public $maximumLoginAttempts     = 3;                   // The maximum number of failed login attempts.
   public $lockoutTime              = 600;                 /* The number of seconds to lockout an account due to exceeded attempts
                                   You should not use a value below 60 (1 minute) */
-  public $forgotPasswordExpiration = 1800;                /* The number of seconds after which a forgot password request will expire. If set to 0, forgot password requests will not expire.
+  public $forgotPasswordExpiration = 5;                /* The number of seconds after which a forgot password request will expire. If set to 0, forgot password requests will not expire.
                                   30 minutes to 1 hour are good values (enough for a user to receive the email and reset its password)
                                   You should not set a value too high, as it would be a security issue! */
   public $recheckTimer             = 0;                   /* The number of seconds after which the session is checked again against database to see if the user still exists and is active.

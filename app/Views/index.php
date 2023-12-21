@@ -3,6 +3,7 @@ $events_data = [];
 
 
 foreach ($events as $event) {
+    $id = $event['id'];
     $title = $event['nazev_eventu'];
     $start = $event['zacatek_eventu'];
     $end = $event['konec_eventu'];
@@ -10,6 +11,7 @@ foreach ($events as $event) {
 
     // Přidejte data události do pole
     $events_data[] = [
+        'test' => $id,
         'title' => $title,
         'start' => $start,
         'end' => $end,
@@ -19,47 +21,36 @@ foreach ($events as $event) {
 
 ?>
 
-<!DOCTYPE html>
-<html lang='en'>
-  <head>
-  <title>Kenoi's website</title>
-    <link type="text/css" rel="stylesheet" href="<?= base_url('assets/bootstrap/css/bootstrap.min.css'); ?>">
-    <link type="text/css" rel="stylesheet" href="<?= base_url('assets/bootstrap/css/custom.css'); ?>">
-    <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet'>
-    <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
-    <meta charset='utf-8' />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
-    <?= $this->include('layout/navbar') ?>
-
-  </head>
-  <body>
+<?= $this->extend('layout/Master'); ?>
+<?= $this->section('content'); ?>
 
   <div class="text-center pt-5">
     <?php if (\App\Helpers\User::isLoggedIn()): ?>
 
-    <a href="/final/pridejEvent"><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">
+    <a href="<?= base_url('/pridejEvent'); ?>"><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">
       Přidej event
     </button></a>
   <?php endif; ?>
     <button id="showWeekBtn" class="btn btn-secondary" type="button" name="button">Týden</button>
     <button id="showMonthBtn" class="btn btn-secondary" type="button" name="button">Měsíc</button>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+    <div class="modal" tabindex="-1">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"><?= (isset($title))?$title:"" ?></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title">Modal title</h5>
+            <div class="barvicka">
+
+            </div>
+            <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            ...
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+          <div class="modal-body2"></div> <br>
+          <div class="modal-footer d-flex justify-content-center">
+            <a href="" id="moreButton" type=""  class="btn btn-primary">Více</a>
           </div>
         </div>
       </div>
@@ -72,49 +63,57 @@ foreach ($events as $event) {
   <div class="px-3" id="calendar"></div>
 
 
-
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.9/index.global.min.js'></script>
-
+<script type="text/javascript" src="<?= base_url('/assets/bootstrap/js/jquery.js'); ?>"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
+
   var calendarEl = document.getElementById('calendar');
   var calendar = new FullCalendar.Calendar(calendarEl, {
       height: 550,
       initialView: 'dayGridMonth',
       events: <?php echo json_encode($events_data); ?>,
-
       eventClick: function(info) {
         modalLabel = document.getElementById('exampleModalLabel');
-        modalLabel.innerHTML = info.event.title;
+
         // Kód, který se provede po kliknutí na událost
-        console.log('Event clicked:', info.event);
-        openModal(event);
+        //console.log(info.event._def.extendedProps.test);
+        const eventId = info.event._def.extendedProps.test;
+        const url = "<?= base_url('/event');?>"+'/'+eventId;
 
+        $.ajax(url,{  //ajax = pomůcka, která dovolí poslat request na server, aniž bych musel obnovit stránku
+          type: 'GET',  //typ routy (např. POST, GET)
+          success: function(data) { //funkce s parametrem data, data = hodnota
+            const event = JSON.parse(data); //do proměnné event přidám data v jazyku JSONU
+            $('.modal-title').html(event.nazev_eventu);  //itemu, který obsahu třídu "modal-title", nastavím html obsah na event.nazev_eventu
+            $('.barvicka').css('background-color', event.color);
+            $('.modal').addClass('show');
+            const formattedStDate = moment(event.zacatek_eventu).format('D.M.YYYY HH:mm');
+            const formattedEnDate = moment(event.konec_eventu).format('D.M.YYYY HH:mm');
+            $('.modal-body').html("Začátek eventu: " +formattedStDate);
+            $('.modal-body2').html("Konec eventu: " +formattedEnDate);
+            $('#moreButton').attr('href', '<?= base_url('/event/edit')?>' + '/' +event.id);
+          },
+          error: function(xhr, status, error) {
+            console.log(error); //chybová hláška
+          }
+      });
 
-        function openModal(event){
-          $('#exampleModal').modal('show');
-        }
-      },
+    },
   });
   calendar.render();
 
-  // Funkce pro změnu zobrazení na týdení
-      document.getElementById('showWeekBtn').addEventListener('click', function() {
-        calendar.changeView('timeGridWeek');
-      });
+    // Funkce pro změnu zobrazení na týdenní
+    document.getElementById('showWeekBtn').addEventListener('click', function() {
+          calendar.changeView('timeGridWeek');
+    });
 
-      // Funkce pro změnu zobrazení na měsíční
-      document.getElementById('showMonthBtn').addEventListener('click', function() {
-        calendar.changeView('dayGridMonth');
-      });
+    // Funkce pro změnu zobrazení na měsíční
+    document.getElementById('showMonthBtn').addEventListener('click', function() {
+      calendar.changeView('dayGridMonth');
+    });
 
-  });
+});
+
 </script>
 
-
-  </body>
-</html>
+<?= $this->endSection(); ?>
