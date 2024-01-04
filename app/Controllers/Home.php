@@ -64,17 +64,17 @@ class Home extends BaseController
       'zacatek_eventu' => null,
       'konec_eventu' => null,
       'color' => $this->request->getPost('color'),
-      'user_id' => \App\Helpers\User::user()->id
+      'user_id' => \App\Helpers\User::user()->id,
+
     ];
+
 
     $rozgahDatum = $this->request->getPost('rozgah_datum'); // Opravený název proměnné
     if ($rozgahDatum) {
       $datum = $this->datum->splitDate($rozgahDatum);
-      $data['zacatek_eventu'] = $datum['zacatek_eventu'];
-      $data['konec_eventu'] = $datum['konec_eventu'];
+      $data['zacatek_eventu'] = $datum['zacatek_eventu'] ." " . $this->request->getPost('startTime');
+      $data['konec_eventu'] = $datum['konec_eventu'] ." " . $this->request->getPost('endTime');
     }
-
-
 
     $builder = $this->db->table('eventy');
     $builder->insert($data);
@@ -156,5 +156,21 @@ class Home extends BaseController
       $model = new Model();
       $data['event'] = $model->getEventById($id);
       return view('eventEdit', $data);
+    }
+
+    public function editEvent($id){
+      $data = $this->request->getPost();
+      $model = new EventModel();
+      $prep = [
+        'nazev_eventu' => $data['name'],
+        'zacatek_eventu' => $data['start'],
+        'konec_eventu' => $data['end'],
+        'color' =>$data['color'],
+        'description' => $data['description']
+      ];
+
+      $model->update($id, $prep);
+      return redirect()->to('/event/edit/'.$id);
+
     }
 }

@@ -13,20 +13,49 @@
         <input type="text" class="form-control" id="rozgah_datum" name="rozgah_datum" placeholder="Vyberte rozsah datumů">
     </div>
       <div>
+        <label for="allDayCheckbox">Celý den: </label>
+        <input type="checkbox" checked id="allDayCheckbox">
+      </div>
+      <div id="timeInputs" style="display: none;">
+        <div class="">
+          <label for="startTime">Začátek: </label>
+          <input type="time" id="startTime" name="startTime">
+        </div>
+        <div class="">
+          <label for="endTime">Konec: </label>
+          <input type="time" id="endTime" name="endTime">
+        </div>
+
+    </div>
+      <div>
           <label for="color">Vyberte barvu:</label>
           <input type="color" id="color" name="color" value="#0BA0E0">
       </div>
       <button type="submit" id="testing" class="btn btn-primary">Odeslat</button>
   </form>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
   flatpickr("#rozgah_datum", {
-      enableTime: true,
+      enableTime: false,
       mode: "range",
-      dateFormat: "Y-m-d H:i",
+      dateFormat: "Y-m-d",
 
   });
+
+  function handleCheckboxChange(event) {
+      var timeInputs = document.getElementById('timeInputs');
+
+      if (!event.target.checked) {
+        timeInputs.style.display = 'block';
+      } else {
+        timeInputs.style.display = 'none';
+      }
+    }
+
+    var allDayCheckbox = document.getElementById('allDayCheckbox');
+    allDayCheckbox.addEventListener('change', handleCheckboxChange);
 </script>
+
 
 <?= $this->endSection(); ?>

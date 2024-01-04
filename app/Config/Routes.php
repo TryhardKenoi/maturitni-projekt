@@ -43,7 +43,7 @@ $routes->get('/group/(:num)', 'Home::showGroup/$1');
 $routes->get('/event/(:num)','Home::getEvent/$1');
 $routes->get('/events','Home::getEvents');
 $routes->get('/event/edit/(:num)', 'Home::getEventEdit/$1');
-
+$routes->post('/event/edit/(:num)', 'Home::editEvent/$1');
 
 $routes->group('auth', ['namespace' => 'App\Controllers'], function ($routes) {
 	$routes->add('login', 'Auth::login');

@@ -14,10 +14,10 @@ class Datum
     function splitDate($date)
     {
         $rozgah = explode(" to ", $date); // Rozdělení pole na začátek a konec rozsahu
-        $data['zacatek_eventu'] = date('Y-m-d H:i:s', strtotime($rozgah[0])); // Převod začátku rozsahu do formátu pro databázi DATE
+        $data['zacatek_eventu'] = date('Y-m-d', strtotime($rozgah[0])); // Převod začátku rozsahu do formátu pro databázi DATE
 
         if (count($rozgah) > 1) {
-            $data['konec_eventu'] = date('Y-m-d H:i:ss', strtotime($rozgah[1])); // Převod konce rozsahu do formátu pro databázi DATE
+            $data['konec_eventu'] = date('Y-m-d', strtotime($rozgah[1])); // Převod konce rozsahu do formátu pro databázi DATE
         } else {
             // Pokud je pole $rozgah jednoprvkové, nastaví konec_eventu stejný jako zacatek_eventu
             $data['konec_eventu'] = $data['zacatek_eventu'];

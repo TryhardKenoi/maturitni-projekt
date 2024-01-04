@@ -15,7 +15,8 @@ foreach ($events as $event) {
         'title' => $title,
         'start' => $start,
         'end' => $end,
-        'color' => $color
+        'color' => $color,
+        'allDay' => (strstr($start, "00:00:00"))?true:false
     ];
 }
 
@@ -69,6 +70,7 @@ $(document).ready(function() {
 
   var calendarEl = document.getElementById('calendar');
   var calendar = new FullCalendar.Calendar(calendarEl, {
+      timeZone: 'Europe/Prague',
       height: 550,
       initialView: 'dayGridMonth',
       events: <?php echo json_encode($events_data); ?>,
@@ -100,6 +102,7 @@ $(document).ready(function() {
 
     },
   });
+  calendar.setOption('locale', 'cs');
   calendar.render();
 
     // Funkce pro změnu zobrazení na týdenní

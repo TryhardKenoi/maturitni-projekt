@@ -12,7 +12,10 @@ class EventModel extends \CodeIgniter\Model
     protected $allowedFields = [
         'nazev_eventu',
         'zacatek_eventu',
-        'konec_eventu'
+        'konec_eventu',
+        'color',
+        'description'
     ];
+    protected $returnType = "object";
 
 }
