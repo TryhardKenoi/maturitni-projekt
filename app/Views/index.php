@@ -47,6 +47,9 @@ foreach ($events as $event) {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          <div class="modal-desc">
+
+          </div>
           <div class="modal-body">
           </div>
           <div class="modal-body2"></div> <br>
@@ -94,6 +97,12 @@ $(document).ready(function() {
             $('.modal-body').html("Začátek eventu: " +formattedStDate);
             $('.modal-body2').html("Konec eventu: " +formattedEnDate);
             $('#moreButton').attr('href', '<?= base_url('/event/edit')?>' + '/' +event.id);
+            if(event.description != null){
+               $('.modal-desc').html("Popisek: "+event.description);
+               console.log(event.description);
+            }else{}
+
+
           },
           error: function(xhr, status, error) {
             console.log(error); //chybová hláška

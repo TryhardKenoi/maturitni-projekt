@@ -14,7 +14,9 @@ class EventModel extends \CodeIgniter\Model
         'zacatek_eventu',
         'konec_eventu',
         'color',
-        'description'
+        'description',
+        'latitute',
+        'longtitute'
     ];
     protected $returnType = "object";
 

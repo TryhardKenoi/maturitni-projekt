@@ -161,12 +161,15 @@ class Home extends BaseController
     public function editEvent($id){
       $data = $this->request->getPost();
       $model = new EventModel();
+
       $prep = [
         'nazev_eventu' => $data['name'],
         'zacatek_eventu' => $data['start'],
         'konec_eventu' => $data['end'],
         'color' =>$data['color'],
-        'description' => $data['description']
+        'description' => $data['description'],
+        'latitute' => $data['latitute'],
+        'longtitute' => $data['longtitute']
       ];
 
       $model->update($id, $prep);
