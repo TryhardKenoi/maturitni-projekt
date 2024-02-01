@@ -142,8 +142,11 @@ class Home extends BaseController
     public function showGroup($id){
       $model = new Model();
       $data['group'] = $model->getGroupById($id);
+      $data['people'] = $model->getUsers($id);
       return view('group', $data);
     }
+
+
 
     public function getEvent($id){
       $model = new Model();
@@ -176,4 +179,36 @@ class Home extends BaseController
       return redirect()->to('/event/edit/'.$id);
 
     }
+
+    public function addUserToGroup($id){
+      $model = new Model();
+      if($model->addUserToGroup($id, $this->request->getPost()['users'])){
+        return redirect()->to('/group/'.$id);
+      }
+    }
+
+    public function checkUser(){
+      $username = $this->request->getPost("identity");
+
+      $model = new Model();
+
+
+      echo $model->checkUser($username) >= 1 ? json_encode(false) : json_encode(true);
+    }
+
+
+    public function registerEmail(){
+      $email = $this->required->getPost("email");
+      $rules = [
+        'email' => "is_unique[users.email]",
+      ];
+      $data = array(
+        'email' => $email,
+      );
+      $this->validatio->setRules($rules);
+      $result = $this->validation->run($data);
+      $result2 = json_encode($result);
+      echo $result2;
+    }
+
 }

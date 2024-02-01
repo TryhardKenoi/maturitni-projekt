@@ -11,5 +11,19 @@
         <p>Popisek: <?= $group->description; ?></p>
     </div>
 
+<div class="container">
+  <form method="post" action="<?= base_url("/group/addUser/".$group->id)?>">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Lidé</label>
+      <select class="form-control" id="users" name="users[]" multiple>
+        <?php foreach($people as $p): ?>
+          <option value="<?= $p->id ?>"><?= $p->first_name .' ' . $p->last_name ?></option>
+        <?php endforeach; ?>
+    </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
 
 <?php $this->endSection(); ?>

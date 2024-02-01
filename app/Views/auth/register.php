@@ -91,10 +91,11 @@
         <a href="<?= base_url('/'); ?>" class="h1"><b>Event</b>Fusion</a>
       </div>
       <div class="card-body">
-        <p class="login-box-msg"><?= lang('Auth.register'); ?></p>
-        <form action="<?= base_url('auth/register') ?>" method="post">
+        <p class="login-box-msg"><?= lang('Auth.register');?></p>
+
+        <form id="registerForm"action="<?= base_url('auth/register') ?>" method="post">
           <div class="input-group mb-3">
-            <input type="text" name="first_name" id="first_name" class="form-control" required placeholder="Jméno">
+            <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Jméno">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -102,7 +103,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" name="last_name" id="last_name" required placeholder="Příjmení">
+            <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Příjmení">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -110,10 +111,8 @@
             </div>
           </div>
 
-
-
           <div class="input-group mb-3">
-            <input type="email" class="form-control" name="email" id="email" required pattern=".*@.*" placeholder="Email">
+            <input type="email" class="form-control" name="email" id="email" placeholder="Email">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -121,7 +120,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" name="password" id="password" required minlength="8" placeholder="Heslo">
+            <input type="password" class="form-control" name="password" id="password" placeholder="Heslo">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -136,10 +135,6 @@
               </div>
             </div>
           </div>
-          <div>
-            <p id="message" style="color: red !important;"></p>
-            <p id="agreeTermsMessage" style="color: red !important;"></p>
-          </div>
           <div class="row">
             <div class="col-8">
               <div class="icheck-primary">
@@ -151,7 +146,7 @@
             </div>
 
             <div class="col-4">
-              <button type="submit" name="submit" id="submit" class="btn btn-primary btn-block"><?= lang('Auth.register2'); ?></button>
+              <button type="submit" name="submit" id="submit" class="btn btn-primary btn-block"><?= lang('Auth.register2');?></button>
             </div>
 
           </div>
@@ -159,37 +154,76 @@
         <div class="social-auth-links text-center">
 
         </div>
-        <a href="<?= base_url('auth/login'); ?>" class="text-center"><?= lang('Auth.have_account'); ?></a>
+        <a href="login.html" class="text-center"><?= lang('Auth.have_account');?></a>
       </div>
 
     </div>
   </div>
 
   <script>
-    document.querySelector('form').onsubmit = function() {
-      var pass1 = document.getElementById('password').value;
-      var pass2 = document.getElementById('password_confirm').value;
-      var message = document.getElementById('message');
-      var agreeMessage = document.getElementById('agreeTermsMessage')
-      var checkbox = document.getElementById('agreeTerms');
 
-      if (pass1 != pass2) {
-        message.innerHTML = "Hesla se neshodují!";
-        event.preventDefault(); //Pokud se hesla neschodují, formulář se neodešle
-      } else {
-        message.innerHTML = "";
-        // Pokud se hesla shodují, můžete formulář odeslat
-      }
+    $(document).ready(function() {
+        $.validator.setDefaults({
+            highlight: function(element) {
+                $(element).addClass("is-invalid").removeClass("is-valid");
+                $(".error").addClass("text-danger");
+            },
+            unhighlight: function(element) {
+                $(element).addClass("is-valid").removeClass("is-invalid");
+                $(".error").addClass("text-success");
+            }
+        });
 
-      if (!checkbox.checked) {
-        event.preventDefault();
-        agreeMessage.innerHTML = "Potvrďte předčtení podmínek";
-      } else {
-        agreeMessage.innerHTML = "";
-      }
+        $("#registerForm").validate({
+            rules: {
+                first_name: {
+                    required: true,
+                },
+                last_name: "required",
 
-    };
-  </script>
+                password: {
+                    required: true,
+                    minlength: 8,
+                },
+                confirm: {
+                    required: true,
+                    minlength:8,
+                    equalTo: "#password"
+                },
+                email: {
+                    required: true,
+                    email: true,
+                    remote: {
+                        url: "register-email",
+                        method: "post"
+                    }
+                }
+
+            },
+            messages: {
+                first_name: "Please enter your firstname",
+                last_name: "Please enter your lastname",
+                password: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least characters long"
+                },
+                confirm_password: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least characters long",
+                    equalTo: "Please enter the same password as above"
+                },
+                email: "Please enter a valid email address",
+
+            },
+            errorPlacement: function(error, element) {
+                error.appendTo(element.parent().parent());
+            },
+            errorElement: "div",
+        })
+    });
+</script>
+
+
 
   <script src="../../plugins/jquery/jquery.min.js"></script>
 

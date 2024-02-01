@@ -97,20 +97,24 @@
                     use Symfony\Contracts\Service\Attribute\Required;
 
  echo lang('Auth.login_heading'); ?></p>
-        <form id="myForm"action="<?= base_url('auth/login'); ?>" method="post">
+        <form id="myForm" action="<?= base_url('auth/login'); ?>" method="post">
           <div class="input-group mb-3">
-            <input type="email" name="identity" id="identity" class="form-control" placeholder="Email" required>
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
+            <div class="d-flex w-100">
+              <input type="email" name="identity" id="identity" class="form-control" placeholder="Email" >
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
               </div>
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" name="password" id="password" class="form-control" required minlength="8" placeholder="<?= lang('Auth.login_password_label');?>">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
+            <div class="d-flex w-100">
+              <input type="password" name="password" id="password" class="form-control" placeholder="<?= lang('Auth.login_password_label');?>">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
               </div>
             </div>
           </div>
@@ -123,7 +127,7 @@
                 </label>
               </div>
             </div>
-            
+
             <div class="col-4">
               <button type="submit" id="submit" name="submit" class="btn btn-primary btn-block"><?= lang('Auth.login_submit_btn'); ?></button>
             </div>
@@ -131,6 +135,7 @@
           </div>
         </form>
       </div>
+
 
       <p class="mb-1 pr-3 pl-3">
         <a href="forgot-password.html"><?php echo lang('Auth.login_forgot_password'); ?></a>
@@ -145,11 +150,13 @@
   </div>
 
 
-  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <script src="<?= base_url('assets/bootstrap/js/jquery.js')?>"></script>
+  <script src="<?= base_url('assets/bootstrap/js/jquery.validate.min.js')?>"></script>
+  <script src="<?= base_url('assets/bootstrap/js/bootstrap.bundle.min.js')?>"></script>
 
-  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <script src="../../dist/js/adminlte.min.js?v=3.2.0"></script>
+  
+
 
 </body>
 
