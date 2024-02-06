@@ -6,9 +6,21 @@
         <ul>
             <li><a href="<?= base_url('')?>">Domů</a></li>
 
-          <?php if (\App\Helpers\User::isLoggedIn()): ?>
+          <?php if (\App\Helpers\User::isLoggedIn()): ?>            
+            <?php if(\App\Helpers\User::isAdmin()): ?>
+              <li>
+                <a href="<?= base_url('/admin/groups')?>">
+                  Skupiny
+                </a>
+              </li>
+              <li>
+                <a href="<?= base_url('/admin/users')?>">
+                  Uzivatele
+                </a>
+              </li>
+              <?php endif; ?>
             <li>
-              <a href="<?= base_url('/profil/')?>">
+              <a href="<?= base_url('/profil')?>">
                 <?= \App\Helpers\User::user()->email; ?>
               </a>
             </li>

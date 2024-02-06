@@ -12,17 +12,44 @@
     </div>
 
 <div class="container">
-  <form method="post" action="<?= base_url("/group/addUser/".$group->id)?>">
-    <div class="form-group">
-      <label for="exampleInputEmail1">Lidé</label>
-      <select class="form-control" id="users" name="users[]" multiple>
-        <?php foreach($people as $p): ?>
-          <option value="<?= $p->id ?>"><?= $p->first_name .' ' . $p->last_name ?></option>
-        <?php endforeach; ?>
-    </select>
+  <div class="row">
+    <div class="col-12">
+      <h1>Seznam clenu skupiny</h1>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Jmeno</th>
+            <th scope="col">Přímení</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($users as $p): ?>
+            <tr>
+              <td><?= $p->id ?></td>
+              <td><?= $p->first_name ?></td>
+              <td><?= $p->last_name ?></td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+    <div class="col-12">
+      <?php if(count($people) != 0): ?>
+        <form method="post" action="<?= base_url("/group/addUser/".$group->id)?>">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Lidé</label>
+          <select class="form-control" id="users" name="users[]" multiple>
+            <?php foreach($people as $p): ?>
+              <option value="<?= $p->id ?>"><?= $p->first_name .' ' . $p->last_name ?></option>
+            <?php endforeach; ?>
+        </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <?php endif; ?>
+    </div>
+  </div>
 </div>
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helpers\User;
 use App\Models\EventModel;
 use App\Models\GetEvent;
 use App\Models\Model;
@@ -22,6 +23,37 @@ class Home extends BaseController
     $events = $model->getDataWithID();
     //$events = $model->findAll();
     return view('index', ['events' => $events]);
+  }
+  
+  //metoda vykresli view s tabulkou uzivatelu a z databaze (modelu) vezme data vsech uzivatelu
+  public function getUsers()
+  {
+    echo "SEZNAM UZIVATELU";
+
+    //return view('nazevView', ['users'=>$usersList]);
+  }
+
+  public function getGroups()
+  {
+    $model = new Model();
+
+    $data['groups'] = $model->getGroups();
+
+    return view('groupList', $data);
+  }
+
+  public function delGroup($id)
+  {
+    $model = new Model();
+    if($model->isInGroup(User::user()->id, $id))
+    {
+      return redirect()->to('/admin/groups')->with('flash-error', 'Nemůžeš odebrat sám sebe!');
+    }else {
+      $model->deleteGroupsUsersByGroupId($id);
+      $model->deleteGroupById($id);
+
+      return redirect()->to('/admin/groups')->with('flash-success', 'Skupina smazana!');
+    }
   }
 
   public function getEvents()
@@ -139,15 +171,6 @@ class Home extends BaseController
 
     }
 
-    public function showGroup($id){
-      $model = new Model();
-      $data['group'] = $model->getGroupById($id);
-      $data['people'] = $model->getUsers($id);
-      return view('group', $data);
-    }
-
-
-
     public function getEvent($id){
       $model = new Model();
       $event = $model->getEventById($id);
@@ -179,6 +202,29 @@ class Home extends BaseController
       return redirect()->to('/event/edit/'.$id);
 
     }
+
+    public function removeFromGroup($groupId, $userId)
+    {
+      $model = new Model();
+
+      if($userId == User::user()->id) {        
+        return redirect()->to('/group/'.$groupId)->with('flash-error', 'Nemuze odebrat sam sebe!');
+      }
+
+      $model->removeUserFromGroup($groupId, $userId);
+
+      
+      return redirect()->to('/group/'.$groupId)->with('flash-success', 'Uspesne odebrano!');
+    }
+
+    public function showGroup($id){
+      $model = new Model();
+      $data['group'] = $model->getGroupById($id);
+      $data['people'] = $model->getUsers($id);
+      $data['users'] = $model->getUsersByGroupId($id);
+      return view('group', $data);
+    }
+
 
     public function addUserToGroup($id){
       $model = new Model();

@@ -18,6 +18,26 @@
     <body>
         <?= $this->include('layout/navbar'); ?>
         <div class="container-fluid">
+            <?php if(session()->get('flash-error')): ?>
+                <div class="container">
+                    <div class="alert alert-danger alert-dismissible text-center mt-1" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <?= session()->get('flash-error');?>
+                    </div>
+                </div>
+            <?php endif;?>
+            <?php if(session()->get('flash-success')): ?>
+                <div class="container">
+                    <div class="alert alert-success alert-dismissible text-center mt-1" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <?= session()->get('flash-success');?>
+                    </div>
+                </div>
+            <?php endif;?>
             <!--Area for dynamic content -->
             <?= $this->renderSection("content"); ?>
         </div>

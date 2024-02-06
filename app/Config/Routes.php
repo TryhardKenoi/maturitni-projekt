@@ -31,6 +31,8 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
+$routes->get('/phpinfo', function() {phpinfo();});
 $routes->get('/', 'Home::index');
 $routes->get('/pridejEvent','Home::addEvent', ['filter'=>'auth']);
 $routes->post('/create', 'Home::create');
@@ -40,6 +42,7 @@ $routes->post('/auth/register', 'Home::createUser');
 $routes->get('/create_group', 'Home::group');
 $routes->post('/auth/create_group', 'Home::createGroup');
 $routes->get('/group/(:num)', 'Home::showGroup/$1');
+$routes->get('/group/remove/(:num)/(:num)', 'Home::removeFromGroup/$1/$2');
 $routes->get('/event/(:num)','Home::getEvent/$1');
 $routes->get('/events','Home::getEvents');
 $routes->get('/event/edit/(:num)', 'Home::getEventEdit/$1');
@@ -47,6 +50,14 @@ $routes->post('/event/edit/(:num)', 'Home::editEvent/$1');
 $routes->post('/group/addUser/(:num)', 'Home::addUserToGroup/$1');
 $routes->post('/login/email', 'Home::checkUser');
 $routes->post('register-email', 'Home::registerEmail');
+
+// 
+$routes->group('admin', function($routes) {
+	$routes->get('users', 'Home::getUsers', ['filter'=>'admin']);
+	$routes->get('groups', 'Home::getGroups', ['filter'=>'admin']);	
+	$routes->get('groups/(:num)', 'Home::getGroupsById', ['filter'=>'admin']);
+	$routes->get('groups/del/(:num)', 'Home::delGroup/$1', ['filter'=>'admin']);
+});
 
 $routes->group('auth', ['namespace' => 'App\Controllers'], function ($routes) {
 	$routes->add('login', 'Auth::login');

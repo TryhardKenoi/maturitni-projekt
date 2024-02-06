@@ -21,6 +21,7 @@
     </div>
     <div class="container">
       <div class="row">
+
         <div class="col-6">
           <h2><b>Údaje</b></h2>
           <p>Name: <?= \App\Helpers\User::user()->first_name; ?> <?= \App\Helpers\User::user()->last_name; ?></p>
