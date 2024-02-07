@@ -6,6 +6,7 @@ use App\Helpers\User;
 use App\Models\EventModel;
 use App\Models\GetEvent;
 use App\Models\Model;
+use App\Models\UserModel;
 use App\Libraries\Datum;
 
 class Home extends BaseController
@@ -28,9 +29,10 @@ class Home extends BaseController
   //metoda vykresli view s tabulkou uzivatelu a z databaze (modelu) vezme data vsech uzivatelu
   public function getUsers()
   {
-    echo "SEZNAM UZIVATELU";
+    $model = new Model();
 
-    //return view('nazevView', ['users'=>$usersList]);
+    $data['users']= $model->getUsersAll();
+    return view('userList', $data);
   }
 
   public function getGroups()
@@ -54,6 +56,12 @@ class Home extends BaseController
 
       return redirect()->to('/admin/groups')->with('flash-success', 'Skupina smazana!');
     }
+  }
+
+  public function delUser($id){
+    $model = new Model();
+    $model->deleteUserById($id);
+    return redirect()->to('/admin/users/')->with('flash-success', 'Uživatel smazán!');
   }
 
   public function getEvents()
@@ -215,6 +223,33 @@ class Home extends BaseController
 
       
       return redirect()->to('/group/'.$groupId)->with('flash-success', 'Uspesne odebrano!');
+    }
+
+    public function getUser($id){
+      $model = new Model();
+      $data['user'] = $model->getUserById($id);
+      return view('editUser', $data);
+
+    }
+
+    public function editUserById($id){
+      $data = $this->request->getPost();
+      $model = new UserModel();
+      $userDB = $model->find($id);
+
+      if(!empty($data['password'])){
+        $password = password_hash($data['password'], PASSWORD_DEFAULT);
+      }
+      
+      $prep = [
+        'first_name' => $data['first_name'],
+        'last_name' => $data['last_name'],
+        'phone' => $data['phone'],
+        'password' => $password,
+        'company' =>$data['company']
+      ];
+      $model->update($id, $prep);
+      return redirect()->to('admin/users/edit/'.$id)->with('flash-success', 'Údaje úspěšně změněny');
     }
 
     public function showGroup($id){

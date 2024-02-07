@@ -57,6 +57,9 @@ $routes->group('admin', function($routes) {
 	$routes->get('groups', 'Home::getGroups', ['filter'=>'admin']);	
 	$routes->get('groups/(:num)', 'Home::getGroupsById', ['filter'=>'admin']);
 	$routes->get('groups/del/(:num)', 'Home::delGroup/$1', ['filter'=>'admin']);
+	$routes->get('users/del/(:num)', 'Home::delUser/$1', ['filter' => 'admin']);
+	$routes->get('users/edit/(:num)', 'Home::getUser/$1', ['filter' => 'admin']);
+	$routes->post('user/edit/(:num)', 'Home::editUserById/$1', ['filter' => 'admin']);
 });
 
 $routes->group('auth', ['namespace' => 'App\Controllers'], function ($routes) {

@@ -82,6 +82,15 @@ class Model
       return count($result) == 1 ? true : false;
     }
 
+    function deleteUserById($id){
+      $builder = $this->db->table('users');
+
+      $builder->where('id', $id);
+      $builder->delete();
+
+      return true;
+    }
+
     function getUsersAll()
     {
       $sql = "SELECT u.id, u.first_name, u.last_name FROM users AS u";
@@ -127,6 +136,15 @@ class Model
         $this->db->table('users_groups')->insert($o);
       }
       return true;
+    }
+
+    function getUserById($id){
+      $builder = $this->db->table('users');
+      $builder->select('*');
+      $builder->where('users.id',$id);
+      $result = $builder->get()->getResult()[0];
+      return $result;
+              
     }
 
     function checkUser($email){

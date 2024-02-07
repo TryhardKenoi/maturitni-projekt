@@ -24,7 +24,6 @@ foreach ($events as $event) {
 
 <?= $this->extend('layout/Master'); ?>
 <?= $this->section('content'); ?>
-
   <div class="text-center pt-5">
     <?php if (\App\Helpers\User::isLoggedIn()): ?>
 

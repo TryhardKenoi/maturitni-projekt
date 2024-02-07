@@ -38,7 +38,7 @@
       <?php if(count($people) != 0): ?>
         <form method="post" action="<?= base_url("/group/addUser/".$group->id)?>">
         <div class="form-group">
-          <label for="exampleInputEmail1">Lidé</label>
+          <label for="exampleInputEmail1">Přidat lidi</label>
           <select class="form-control" id="users" name="users[]" multiple>
             <?php foreach($people as $p): ?>
               <option value="<?= $p->id ?>"><?= $p->first_name .' ' . $p->last_name ?></option>
