@@ -13,6 +13,29 @@ class Model
         $this->db = \Config\Database::connect();
     }
 
+    //editace eventu
+
+    //pridani lidi
+    function getUsersToAddFiltered($id)
+    {
+      $sql = "SELECT u.id, u.first_name, u.last_name 
+      FROM users AS u 
+      LEFT JOIN eventy_users AS eu ON eu.user_id = u.id AND eu.event_id =".$id." 
+      WHERE eu.user_id IS NULL;";
+
+      return $this->db->query($sql)->getResult();
+    }
+
+    function getRolesToAddFiltered($id)
+    {
+      $sql = "SELECT g.id, g.name, g.description
+      FROM groups AS g
+      LEFT JOIN eventy_groups AS eg ON eg.group_id = g.id AND eg.event_id =".$id." 
+      WHERE eg.group_id IS NULL;";
+
+      return $this->db->query($sql)->getResult();
+    }
+
     function getGroupById($id) {
       $builder = $this->db->table('groups');
       $builder->select('*')
@@ -23,11 +46,11 @@ class Model
 
 
     function getEventById($id){
-      $builder = $this->db->table('eventy');
-      $builder->select('*')
-              ->where('id', $id);
+      $builder = $this->db->table('eventy AS e');
+      $builder->select('e.*')
+              ->where('e.id', $id);
       $result = $builder->get();
-    return $result->getResult()[0];
+      return $result->getResult()[0];
     }
 
     function getGroups()
@@ -37,6 +60,7 @@ class Model
       $result = $builder->get();
       return $result->getResult();
     }
+
 
     function removeUserFromGroup($groupId, $userId)
     {
@@ -68,6 +92,22 @@ class Model
       $builder->where('id', $groupId);
       $builder->delete();
       return true;
+    }
+
+    public function getUsersFromEventByEventId($id)
+    {
+      $res = $this->db->query("SELECT eu.id,u.first_name,u.last_name FROM users AS u
+      LEFT JOIN eventy_users AS eu ON eu.user_id = u.id
+      WHERE eu.event_id = ".$id);
+      return $res->getResult();
+    }
+
+    public function getGroupsFromEventByEventId($id)
+    {
+      $res = $this->db->query("SELECT eg.id,g.name,g.description FROM `groups` AS g
+      LEFT JOIN eventy_groups AS eg ON eg.group_id = g.id
+      WHERE eg.event_id = ".$id);
+      return $res->getResult();
     }
 
     function isInGroup($userId, $groupId)
@@ -110,20 +150,32 @@ class Model
     }
 
 
+    function getGroupsByEventId($eId)
+    {
+      $builder = $this->db->table('groups AS g');
+      $builder->select('g.name')
+              ->join('eventy_groups AS eg','eg.group_id=g.id', 'left')
+              ->where('eg.event_id', $eId);
+      $result = $builder->get()->getResult();
+      return $result;
+    }
 
-    function getUsers($id){
-      /*
-      $builder = $this->db->table('users');
-      $builder->select('id, first_name, last_name');
-      *
-      return $builder->get()->getResult();
-      */
+    function getUsersByEventId($eId)
+    {
+      $builder = $this->db->table('eventy_users AS eu');
+      $builder->select('u.first_name, u.last_name')
+              ->join('users AS u', 'u.id=eu.user_id', 'left')
+              ->where('eu.event_id', $eId);
+      $result = $builder->get()->getResult();
+      return $result;
+    }
 
+    function getUsers($id) {
       $sql = "SELECT u.id, u.first_name, u.last_name FROM users AS u
               LEFT JOIN users_groups AS ug ON ug.user_id = u.id and ug.group_id = ".$id."
               where ug.id is null
               group by u.id;";
-
+      
       return $this->db->query($sql)->getResult();
     }
 

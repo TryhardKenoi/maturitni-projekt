@@ -42,7 +42,7 @@ $routes->post('/auth/register', 'Home::createUser');
 $routes->get('/create_group', 'Home::group');
 $routes->post('/auth/create_group', 'Home::createGroup');
 $routes->get('/group/(:num)', 'Home::showGroup/$1');
-$routes->get('/group/remove/(:num)/(:num)', 'Home::removeFromGroup/$1/$2');
+
 $routes->get('/event/(:num)','Home::getEvent/$1');
 $routes->get('/events','Home::getEvents');
 $routes->get('/event/edit/(:num)', 'Home::getEventEdit/$1');
@@ -50,16 +50,29 @@ $routes->post('/event/edit/(:num)', 'Home::editEvent/$1');
 $routes->post('/group/addUser/(:num)', 'Home::addUserToGroup/$1');
 $routes->post('/login/email', 'Home::checkUser');
 $routes->post('register-email', 'Home::registerEmail');
+$routes->get('/profil/zmena-hesla/(:num)', 'Home::changePassForm/$1', ['filter'=>'auth']);
+$routes->post('/profil/zmena-hesla/submit/(:num)', 'Home::changePassword/$1', ['filter'=>'auth']);
+$routes->post('event/delete/(:num)', 'Home::deleteEvent/$1');
 
 // 
 $routes->group('admin', function($routes) {
+	
+	$routes->post('group/addUser/(:num)', 'Home::addUserToGroupAdmin/$1');
+	$routes->get('group/remove/(:num)/(:num)', 'Home::removeFromGroup/$1/$2', ['filter' => 'admin']);
 	$routes->get('users', 'Home::getUsers', ['filter'=>'admin']);
 	$routes->get('groups', 'Home::getGroups', ['filter'=>'admin']);	
 	$routes->get('groups/(:num)', 'Home::getGroupsById', ['filter'=>'admin']);
 	$routes->get('groups/del/(:num)', 'Home::delGroup/$1', ['filter'=>'admin']);
+	$routes->get('groups/edit/(:num)', 'Home::editGroup/$1', ['filter'=> 'admin']);
 	$routes->get('users/del/(:num)', 'Home::delUser/$1', ['filter' => 'admin']);
 	$routes->get('users/edit/(:num)', 'Home::getUser/$1', ['filter' => 'admin']);
 	$routes->post('user/edit/(:num)', 'Home::editUserById/$1', ['filter' => 'admin']);
+	$routes->get('register', 'Home::registerUser', ['filter' => 'admin']);
+	$routes->post('registerUser', 'Home::createUserAdmin', ['filter' =>'admin']);
+	$routes->get('events', 'Home::getAllEvents', ['filter'=> 'admin']);
+	$routes->get('event/del/(:num)', 'Home::deleteEventAdmin/$1', ['filter' =>'admin']);
+	$routes->get('event/edit/(:num)', 'Home::getEventEditAdmin/$1', ['filter' => 'admin']);
+	$routes->post('event/edit/submit/(:num)', 'Home::editEventBonge/$1', ['filter' => 'admin']);
 });
 
 $routes->group('auth', ['namespace' => 'App\Controllers'], function ($routes) {

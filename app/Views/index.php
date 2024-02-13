@@ -1,13 +1,12 @@
 <?php
 $events_data = [];
 
-
 foreach ($events as $event) {
-    $id = $event['id'];
-    $title = $event['nazev_eventu'];
-    $start = $event['zacatek_eventu'];
-    $end = $event['konec_eventu'];
-    $color = $event['color'];
+    $id = $event->id;
+    $title = $event->nazev_eventu;
+    $start = $event->zacatek_eventu;
+    $end = $event->konec_eventu;
+    $color = $event->color;
 
     // Přidejte data události do pole
     $events_data[] = [
@@ -19,7 +18,6 @@ foreach ($events as $event) {
         'allDay' => (strstr($start, "00:00:00"))?true:false
     ];
 }
-
 ?>
 
 <?= $this->extend('layout/Master'); ?>
@@ -52,6 +50,8 @@ foreach ($events as $event) {
           <div class="modal-body">
           </div>
           <div class="modal-body2"></div> <br>
+          <div class="modal-body3"></div> 
+          <div class="modal-body4"></div> <br>
           <div class="modal-footer d-flex justify-content-center">
             <a href="" id="moreButton" type=""  class="btn btn-primary">Více</a>
           </div>
@@ -75,14 +75,14 @@ $(document).ready(function() {
       timeZone: 'Europe/Prague',
       height: 550,
       initialView: 'dayGridMonth',
-      events: <?php echo json_encode($events_data); ?>,
+      droppable: true,
+      events: <?= $eventsList ?>,
       eventClick: function(info) {
         modalLabel = document.getElementById('exampleModalLabel');
-
+        
         // Kód, který se provede po kliknutí na událost
-        //console.log(info.event._def.extendedProps.test);
-        const eventId = info.event._def.extendedProps.test;
-        const url = "<?= base_url('/event');?>"+'/'+eventId;
+        const eventId = info.event._def.publicId;
+        const url = "<?= base_url('/event') ?>"+'/'+eventId;
 
         $.ajax(url,{  //ajax = pomůcka, která dovolí poslat request na server, aniž bych musel obnovit stránku
           type: 'GET',  //typ routy (např. POST, GET)
@@ -91,15 +91,42 @@ $(document).ready(function() {
             $('.modal-title').html(event.nazev_eventu);  //itemu, který obsahu třídu "modal-title", nastavím html obsah na event.nazev_eventu
             $('.barvicka').css('background-color', event.color);
             $('.modal').addClass('show');
-            const formattedStDate = moment(event.zacatek_eventu).format('D.M.YYYY HH:mm');
-            const formattedEnDate = moment(event.konec_eventu).format('D.M.YYYY HH:mm');
+            console.log(event);
+            let formattedStDate;
+            let formattedEnDate;
+            if(event.allDay == true){
+              formattedStDate = moment(event.zacatek_eventu).format('D.M.YYYY');
+              formattedEnDate = moment(event.konec_eventu).format('D.M.YYYY');
+            }else{
+              formattedStDate = moment(event.zacatek_eventu).format('D.M.YYYY HH:mm');
+              formattedEnDate = moment(event.konec_eventu).format('D.M.YYYY HH:mm');
+            }
             $('.modal-body').html("Začátek eventu: " +formattedStDate);
             $('.modal-body2').html("Konec eventu: " +formattedEnDate);
             $('#moreButton').attr('href', '<?= base_url('/event/edit')?>' + '/' +event.id);
+
+            //skupiny
+            if(event.groups.length > 0) {
+              $('.modal-body3').html("Skupiny: " +event.groups.map((group) => group.name));
+                  // eventy.groups[0], eventy.groups[1], 
+            }else {
+              $('.modal-body3').html("");
+            }
+
+            //uzivatele
+            if(event.users.length > 0) {
+              $('.modal-body4').html("Uživatelé: " +event.users.map((user) => user.first_name));
+                  // eventy.groups[0], eventy.groups[1], 
+            }else {
+              $('.modal-body4').html("");
+            }
+
             if(event.description != null){
                $('.modal-desc').html("Popisek: "+event.description);
                console.log(event.description);
-            }else{}
+            }else{
+
+            }
 
 
           },

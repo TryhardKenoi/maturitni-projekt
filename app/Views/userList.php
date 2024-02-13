@@ -27,9 +27,14 @@
                         </td>
                         
                         
-                        
+                        <?php endforeach; ?>
                     </tr>
-                <?php endforeach; ?>
+                    <tr>
+                        <td>
+                            <a class="btn btn-primary" href="<?= base_url('/admin/register') ?>">Nový uživatel</a>
+                        </td>
+                    </tr>
+                    
                 </tbody>
             </table>
         </div>

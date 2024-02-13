@@ -7,7 +7,7 @@
 </div>
 
 <div class="" id="showForm">
-    <form class="" action="<?= base_url('admin/user/edit/'. $user->id); ?>" method="post">
+    <form class="" id="editForm" action="<?= base_url('admin/user/edit/'. $user->id); ?>" method="post">
       <div class="form-group">
         <label for="name">Jméno</label>
         <input type="text" class="form-control" id="first_name" name="first_name" value="<?= $user->first_name; ?> ">
@@ -34,29 +34,8 @@
         <input type="text" class="form-control" id="company" name="company" value="<?= $user->company; ?> ">
       </div>
       
-      <button type="submit" id="submitButton" class="btn btn-secondary" disabled name="button">Odeslat</button>
+      <button type="submit" id="submitButton" class="btn btn-secondary" name="button">Odeslat</button>
   </form>
 </div>
-
-<script>
-window.onload = function () {
-    var heslo = document.getElementById("password");
-    var kontrolaHesla = document.getElementById("password-again");
-    var submitButton = document.getElementById("submitButton");
-
-    function validatePassword(){
-        if(heslo.value != kontrolaHesla.value) {
-            kontrolaHesla.setCustomValidity("Hesla se neshodují");
-            submitButton.disabled = true;
-        } else {
-            kontrolaHesla.setCustomValidity('');
-            submitButton.disabled = false;
-        }
-    }
-
-    heslo.onchange = validatePassword;
-    kontrolaHesla.onkeyup = validatePassword;
-}
-</script>
 
 <?= $this->endSection(); ?>

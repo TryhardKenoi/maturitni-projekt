@@ -28,6 +28,7 @@
           <p>Email: <?= \App\Helpers\User::user()->email; ?></p>
           <p>Firma: <?= \App\Helpers\User::user()->company; ?></p>
           <p>ID: <?= \App\Helpers\User::user()->id; ?></p>
+          <a class="btn btn-secondary" href="<?= base_url('profil/zmena-hesla/'. \App\Helpers\User::user()->id); ?>">Změnit heslo</a>
         </div>
         <div class="col-6">
           <h2><b>Skupiny</b></h2>

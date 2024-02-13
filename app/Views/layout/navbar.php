@@ -18,6 +18,11 @@
                   Uzivatele
                 </a>
               </li>
+              <li>
+                <a href="<?= base_url('/admin/events')?>">
+                  Eventy
+                </a>
+              </li>
               <?php endif; ?>
             <li>
               <a href="<?= base_url('/profil')?>">

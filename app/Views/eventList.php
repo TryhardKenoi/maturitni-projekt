@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row mt-4">
         <div class="col-12">
-            <h1>Seznam clenu skupiny</h1>
+            <h1>Seznam eventů</h1>
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
@@ -14,22 +14,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach($groups as $g): ?>
+                <?php foreach($event as $e): ?>
                     <tr>
-                        <td><?= $g->id ?></td>
-                        <td><?= $g->description ?></td>
+                        <td><?= $e->id ?></td>
+                        <td><?= $e->nazev_eventu ?></td>
                         <td class="d-flex mx-1">
-                            <a href="<?= base_url('/admin/groups/del/'.$g->id) ?>" class="btn btn-danger">Smazat</a>
-                            <a href="<?= base_url('/admin/groups/edit/'.$g->id) ?>" class="btn btn-primary">Upravit</a>
+                            <a href="<?= base_url('/admin/event/del/'.$e->id) ?>" class="btn btn-danger mr-2">Smazat</a>
+                            <a href="<?= base_url('/admin/event/edit/'.$e->id) ?>" class="btn btn-primary mr-2">Upravit</a>
                         </td>
                         
                     </tr>
                 <?php endforeach; ?>
-                <tr>
-                        <td>
-                            <a class="btn btn-primary" href="<?= base_url('/register') ?>">Nová skupina </a>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
