@@ -242,15 +242,20 @@ class Home extends BaseController
     $idU = \App\Helpers\User::user()->id;
 
     $name = $this->request->getPost('group_name');
-    $description = $this->request->getPost('description');
+    $description = $this->request->getPost('description'); 
     $group = $this->ionAuth->createGroup($name, $description);
 
     if(!$group){
       return redirect()->to('/profil')->with('danger', 'Skupina již existuje');
     }else{
       $this->ionAuth->addToGroup($group, $idU);
+      $this->ionAuth->updateGroup($group, $name, array(
+        'owner_id' => $idU
+      ));
       return redirect()->to('/profil');
     }
+
+    return redirect()->to('/profil');
   }
 
   public function getEvent($id){
@@ -377,6 +382,25 @@ class Home extends BaseController
     return redirect()->to('/admin/groups/edit/'.$groupId)->with('Fsuccess', 'Uspesne odebrano!');
   }
 
+  public function removeUserFromEvent($eventUserID, $eventId){
+    $model = new Model();
+
+    if($model->removeUserFromEvent($eventUserID)){
+      return redirect()->to('/event/edit/'.$eventId)->with('flash-success', 'Úspěšně odebráno!');
+    }else{
+      return redirect()->to('/event/edit/'.$eventId)->with('flash-error', 'Odebrání neuspěšné!');
+    }    
+  }
+
+  public function removeGroupFromEvent($eventGroupId, $eventId){
+    $model = new Model();
+    if($model->removeGroupFromEvent($eventGroupId)){
+      return redirect()->to('/event/edit/'.$eventId)->with('flash-success', 'Úspěšně odebráno!');
+    }else{
+      return redirect()->to('/event/edit/'.$eventId)->with('flash-error', 'Odebrání neuspěšné!');
+    }
+  }
+
   public function getUser($id){
     $model = new Model();
     $data['user'] = $model->getUserById($id);
@@ -449,10 +473,8 @@ class Home extends BaseController
       return redirect()->to('profil/zmena-hesla/'.$id)->with('flash-success', 'Údaje úspěšně změněny');
     }else{
       $password = $userDB->password;
-      return redirect()->to('profil/zmena-hesla/'.$id)->with('flash-danger', 'dsjdkasjdkas úspěšně změněny');
-    }
-    
-    
+      return redirect()->to('profil/zmena-hesla/'.$id)->with('flash-error', 'dsjdkasjdkas úspěšně změněny');
+    }  
   }
 
   public function editGroup($id){

@@ -115,7 +115,7 @@ $(document).ready(function() {
 
             //uzivatele
             if(event.users.length > 0) {
-              $('.modal-body4').html("Uživatelé: " +event.users.map((user) => user.first_name));
+              $('.modal-body4').html("Uživatelé: " +event.users.map((user) => user.first_name + user.last_name));
                   // eventy.groups[0], eventy.groups[1], 
             }else {
               $('.modal-body4').html("");

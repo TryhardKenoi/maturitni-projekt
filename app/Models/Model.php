@@ -73,15 +73,28 @@ class Model
       return true;
     }
 
+    function removeUserFromEvent($euId){
+      $builder = $this->db->table('eventy_users');
+
+      $builder->where('id', $euId);
+      $builder->delete();
+      return true;
+    }
+
+    function removeGroupFromEvent($egId){
+      $builder = $this->db->table('eventy_groups');
+
+      $builder->where('id', $egId);
+      $builder->delete();
+      return true;
+    }
+
     function deleteGroupsUsersByGroupId($id)
     {
       $builder = $this->db->table('users_groups');
 
       $builder->where('group_id', $id);
       $builder->delete();
-
-
-
       return true;
     }
     
@@ -90,8 +103,12 @@ class Model
       $builder = $this->db->table('groups');
 
       $builder->where('id', $groupId);
-      $builder->delete();
-      return true;
+      if($builder->delete()){
+        return true;
+      }else{
+        return false;
+      }
+      
     }
 
     public function getUsersFromEventByEventId($id)

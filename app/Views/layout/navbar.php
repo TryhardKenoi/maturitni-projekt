@@ -32,7 +32,7 @@
             <li><a href="<?= base_url('/auth/logout')?>">Odhlásit</a></li>
           <?php else: ?>
             <li><a href="<?= base_url('/auth')?>">Přihlášení</a></li>
-            <li><a href="<?= base_url('/register')?>">Registrace</a></li>
+            <li><a href="<?= base_url('/auth/register')?>">Registrace</a></li>
 
           <?php endif;?>
         </ul>

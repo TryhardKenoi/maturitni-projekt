@@ -154,7 +154,7 @@
         <div class="social-auth-links text-center">
 
         </div>
-        <a href="login.html" class="text-center"><?= lang('Auth.have_account');?></a>
+        <a href="<?= base_url('auth/') ?>" class="text-center"><?= lang('Auth.have_account');?></a>
       </div>
 
     </div>

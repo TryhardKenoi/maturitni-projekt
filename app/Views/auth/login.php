@@ -141,7 +141,7 @@
         <a href="forgot-password.html"><?php echo lang('Auth.login_forgot_password'); ?></a>
       </p>
       <p class="mb-1 pr-3 pl-3 pb-3">
-        <a href="<?= base_url('/register') ?> "><?php echo lang('Auth.no_login_yet'); ?></a>
+        <a href="<?= base_url('/auth/register') ?> "><?php echo lang('Auth.no_login_yet'); ?></a>
       </p>
     </div>
 

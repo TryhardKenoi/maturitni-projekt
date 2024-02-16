@@ -21,6 +21,7 @@
             <th scope="col">#</th>
             <th scope="col">Jmeno</th>
             <th scope="col">Přímení</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +30,11 @@
               <td><?= $p->id ?></td>
               <td><?= $p->first_name ?></td>
               <td><?= $p->last_name ?></td>
+              <td>
+                <?php if(\App\Helpers\User::user()->id == $group->owner_id): ?>
+                  <h4><span class="badge badge-danger">Majitel</span></h4>
+                <?php endif; ?>
+              </td>
             </tr>
           <?php endforeach; ?>
         </tbody>

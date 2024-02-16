@@ -7,7 +7,7 @@
 </div>
 
 <div class="container" id="showForm">
-    <form class="" action="<?= base_url('admin/event/edit/submit').'/'.$event->id ?>" method="post">
+    <form class="" action="<?= base_url('/event/edit/'.$event->id); ?>" method="post">
       <div class="form-group">
         <label for="name">Název eventu</label>
         <input type="text" class="form-control" id="name" name="name" value="<?= $event->nazev_eventu; ?> ">
@@ -28,6 +28,78 @@
           <label for="color">Barva</label>
           <input type="color" id="color" name="color" value="<?= $event->color; ?>">
       </div>
+      <div class="row">
+        <div class="col-md-6 col-12">
+            <h1 class="text-center">Uživatelé</h1>
+            <table class="table">
+              <thead class="thead-dark">
+              <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Název</th>
+                  <th></th>
+              </tr>
+              </thead>
+              <tbody>
+                  <?php foreach($users as $u): ?>
+                      <tr>
+                          <td><?= $u->id ?></td>                        
+                          <td><?= $u->first_name.' '.$u->last_name ?></td>
+                          <td class="d-flex mx-1">
+                              <a href="<?= base_url('admin/event/edit/user/remove'. '/' .$u->id . '/' .$event->id) ?>" class="btn btn-danger remove">Odebrat</a>
+                          </td>
+                      </tr>
+                  <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-6 col-12">
+            <h1 class="text-center">Skupiny</h1>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Název</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($groups as $g): ?>
+                        <tr>
+                            <td><?= $g->id ?></td>                        
+                            <td><?= $g->name ?></td>
+                            <td class="d-flex mx-1">
+                                <a href="<?= base_url('admin/event/edit/group/remove'. '/' .$g  ->id . '/' .$event->id) ?>" class="btn btn-danger remove">Odebrat</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+              </table>            
+          </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-12">
+          <div class="form-group w-100">
+            <label for="exampleInputEmail1">Přidat lidi</label>
+            <select class="form-control" id="users" name="users[]" multiple>
+              <?php foreach ($people as $p) : ?>
+                <option value="<?= $p->id ?>"><?= $p->first_name . ' ' . $p->last_name ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6 col-12">
+        <div class="form-group w-100">
+          <label for="exampleInputEmail1">Přidat skupiny</label>
+          <select class="form-control" id="groups" name="groups[]" multiple>
+            <?php foreach ($roles as $g) : ?>
+              <option value="<?= $g->id ?>"><?= $g->name ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        </div>
+      </div>
+
       <div class="pb-5">
           <label for="location">Místo konání</label>
           <input type="text" name="latitute" value="<?= $event->latitute; ?>" id="latitute" readonly />
@@ -73,8 +145,13 @@
     </script>
       </div>
       <?php if($event->creator_id == \App\Helpers\User::user()->id): ?> 
-        <button type="submit" id="submitButton" class="btn btn-secondary" name="button">Odeslat</button> 
+        <button type="submit" id="submitButton" class="btn btn-primary" name="button">Uložit změny</button> 
       <?php endif; ?>
+  </form>
+  <form method="post" action="<?= base_url('event/delete/'. $event->id); ?>" class="mt-4">    
+    <?php if($event->creator_id == \App\Helpers\User::user()->id): ?> 
+      <button type="submit" id="submitButton" class="btn btn-danger" name="button">Smazat event</button> 
+    <?php endif; ?>
   </form>
 </div>
 
@@ -86,9 +163,14 @@
   console.log(isOwner);
   if(!isOwner) {
     const item = document.querySelectorAll(".form-control");
+    const btns = document.querySelectorAll(".remove");
 
     item.forEach((element, index) => {
       element.setAttribute('readonly', index);
+    });
+
+    btns.forEach(button => {
+      button.classList.add('disabled');
     });
   }
 </script>

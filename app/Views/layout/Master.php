@@ -18,13 +18,13 @@
     <body>
         <?= $this->include('layout/navbar'); ?>
         <div class="container-fluid">
-            <?php if(session()->get('flash-danger')): ?>
+            <?php if(session()->get('flash-error')): ?>
                 <div class="container">
                     <div class="alert alert-danger alert-dismissible text-center mt-1" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">x</span>
                         </button>
-                        <?= session()->get('flash-danger');?>
+                        <?= session()->get('flash-error');?>
                     </div>
                 </div>
             <?php endif;?>

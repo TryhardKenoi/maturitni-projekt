@@ -37,7 +37,7 @@ $routes->get('/', 'Home::index');
 $routes->get('/pridejEvent','Home::addEvent', ['filter'=>'auth']);
 $routes->post('/create', 'Home::create');
 $routes->get('/profil', 'Home::profil/');
-$routes->get('/register', 'Home::register');
+$routes->get('/auth/register', 'Home::register');
 $routes->post('/auth/register', 'Home::createUser');
 $routes->get('/create_group', 'Home::group');
 $routes->post('/auth/create_group', 'Home::createGroup');
@@ -53,6 +53,8 @@ $routes->post('register-email', 'Home::registerEmail');
 $routes->get('/profil/zmena-hesla/(:num)', 'Home::changePassForm/$1', ['filter'=>'auth']);
 $routes->post('/profil/zmena-hesla/submit/(:num)', 'Home::changePassword/$1', ['filter'=>'auth']);
 $routes->post('event/delete/(:num)', 'Home::deleteEvent/$1');
+$routes->get('event/edit/user/remove/(:num)/(:num)', 'Home::removeUserFromEvent/$1/$2');
+$routes->get('event/edit/group/remove/(:num)/(:num)', 'Home::removeGroupFromEvent/$1/$2');
 
 // 
 $routes->group('admin', function($routes) {
@@ -73,9 +75,12 @@ $routes->group('admin', function($routes) {
 	$routes->get('event/del/(:num)', 'Home::deleteEventAdmin/$1', ['filter' =>'admin']);
 	$routes->get('event/edit/(:num)', 'Home::getEventEditAdmin/$1', ['filter' => 'admin']);
 	$routes->post('event/edit/submit/(:num)', 'Home::editEventBonge/$1', ['filter' => 'admin']);
+	$routes->get('event/edit/user/remove/(:num)/(:num)', 'Home::removeUserFromEventAdmin/$1/$2');
+	$routes->get('event/edit/group/remove/(:num)/(:num)', 'Home::removeGroupFromEventAdmin/$1/$2');
 });
 
 $routes->group('auth', ['namespace' => 'App\Controllers'], function ($routes) {
+
 	$routes->add('login', 'Auth::login');
 	$routes->get('logout', 'Auth::logout');
 	$routes->add('forgot_password', 'Auth::forgot_password');

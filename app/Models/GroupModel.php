@@ -10,7 +10,9 @@ class GroupModel extends \CodeIgniter\Model
     protected $table = 'groups';
     protected $id = '$id';
     protected $allowedFields = [
-        'name'
+        'name',
+        'description',
+        'owner_id'
     ];
     protected $returnType = "object";
 
